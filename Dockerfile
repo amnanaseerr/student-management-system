@@ -2,7 +2,7 @@ FROM php:8.2-cli
 
 # System dependencies + PHP extensions Laravel needs
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libpng-dev libonig-dev \
+    git unzip libzip-dev libpng-dev libonig-dev libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pdo_mysql zip gd mbstring \
     && apt-get clean
 
