@@ -62,3 +62,17 @@ Route::middleware('auth')->group(function () {
 
 // Pulls in /login, /register, /logout, /forgot-password, /reset-password, etc.
 require __DIR__.'/auth.php';
+
+// Temporary one-time admin setup route - remove after use
+Route::get('/make-admin/{token}', function (\Illuminate\Http\Request $request, $token) {
+    if ($token !== 'amna-secret-2026') {
+        abort(404);
+    }
+    $user = \App\Models\User::where('email', $request->query('email'))->first();
+    if (!$user) {
+        return 'No user found with that email.';
+    }
+    $user->role = 'admin';
+    $user->save();
+    return $user->email . ' is now an admin.';
+});
